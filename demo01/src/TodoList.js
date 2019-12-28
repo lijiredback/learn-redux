@@ -1,28 +1,33 @@
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
 import { Input, Button, List } from 'antd'
-
-const dataList = [
-    '健身',
-    '10点学习',
-    '12点做饭'
-]
+import store from './store'
 
 class TodoList extends Component {
+    constructor(props) {
+        super(props);
+        console.log(store.getState());
+        this.state = {
+            inputValue: store.getState().inputValue,
+            dataList: store.getState().dataList
+        }
+    }
+
+
     render() {
         return (
             <div style={{ margin: '10px'}}>
                 <div>
                     <Input 
                         style={{ width: '300px', marginRight: '10px' }} 
-                        placeholder="请填写内容"
+                        placeholder={ this.state.inputValue }
                     />
                     <Button type="primary">增加</Button>
                 </div>
                 <div style={{ margin: '10px', width: '300px' }}>
                 <List 
                     bordered
-                    dataSource={ dataList }
+                    dataSource={ this.state.dataList }
                     renderItem={ item => (<List.Item>{ item }</List.Item>) }
                 />
                 </div>
