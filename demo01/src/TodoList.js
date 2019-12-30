@@ -6,11 +6,12 @@ import store from './store'
 class TodoList extends Component {
     constructor(props) {
         super(props);
-        console.log(store.getState());
-        this.state = {
-            inputValue: store.getState().inputValue,
-            dataList: store.getState().dataList
-        }
+        // console.log(store.getState());
+        this.state = store.getState();
+        this.changeInputValue = this.changeInputValue.bind(this);
+        this.storeChange = this.storeChange.bind(this);
+        // redux 订阅
+        store.subscribe(this.storeChange)
     }
 
 
@@ -21,6 +22,7 @@ class TodoList extends Component {
                     <Input 
                         style={{ width: '300px', marginRight: '10px' }} 
                         placeholder={ this.state.inputValue }
+                        onChange={ this.changeInputValue }
                     />
                     <Button type="primary">增加</Button>
                 </div>
@@ -33,6 +35,22 @@ class TodoList extends Component {
                 </div>
             </div>
         )
+    }
+
+    changeInputValue(e) {
+        // 1.此时组件中的改变已经监听到了
+        console.log(e.target.value);
+        // 2.需要一个 action，是一个对象
+        const action = {
+            type: 'changeInput',
+            value: e.target.value
+        }
+        // 3.更新到 store
+        store.dispatch(action)
+    }
+
+    storeChange() {
+        this.setState(store.getState());
     }
 }
 
