@@ -1,3 +1,5 @@
+import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM } from './actionTypes'
+
 const defaultState = {
     inputValue: '请填写',
     dataList: [
@@ -12,13 +14,21 @@ export default (state = defaultState, action) => {
 
     // 4. reducer 处理 state
     // reducer 中只能接受 state，不能改变 state
-    if (action.type === 'changeInput') {
+    if (action.type === CHANGE_INPUT ) {
         let newState = JSON.parse(JSON.stringify(state));
-        console.log(newState);
         newState.inputValue = action.value;
-        console.log('走了1');
         return newState;
     }
-    console.log('走了2');
+    if (action.type === ADD_ITEM) {
+        let newState = JSON.parse(JSON.stringify(state));
+        newState.dataList = [...newState.dataList, action.value];
+        newState.inputValue = '';
+        return newState;
+    }
+    if (action.type === DELETE_ITEM) {
+        let newState = JSON.parse(JSON.stringify(state));
+        newState.dataList.splice(action.index, 1);
+        return newState;
+    }
     return state
 }
