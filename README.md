@@ -16,3 +16,10 @@ just some demos, foundation of redux
     - store 必须唯一
     - 只有 store 能改变state，reducer 不行
     - reducer 必须是一个纯函数（返回值必须由参数决定，也就是其中不能发送 ajax 请求）
+
+## demo02
+
++ UI，逻辑分离
++ 无状态组件
+    - 只有 UI，没有逻辑，一个函数
+    - 比继承的方式（有状态组件）性能高
